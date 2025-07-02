@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>JournalZ</title>
+    </head>
+
+
+    <body>
+        {% if not user.id %}
+        <h1>Anonymous</h1>
+        <a href="/login">Log in</a>
+        {% endif %}
+
+        {% if user.id %}
+		<h1>Hello, {{user.username}}</h1>
+
+        <form action='logout/' method="POST">
+			{% csrf_token %}
+            <input type="submit" value="Logout"/>
+        </form>
+
+        <h2>New Journal</h2>
+        <form action="write/" method="POST">
+            {% csrf_token %}
+            <textarea name="entry_text"></textarea>
+            <input type="submit" value="Submit"/>
+        </form>
+        {% endif %}
+		
+        <h2>Journal Items</h2>
+        {% for entry in entries %}
+        <div style="border-radius:1px; border-color:black; border-style:solid; width:400px;padding:4px 4px 4px 4px">
+            <h3>{{entry.date}}</h3>
+            <h4>from: {{entry.author.username}}</h4>
+            <h4>{{entry.text}}</h4>
+        </div>
+        <br>
+        {% endfor %}
+
+        <form id='transfer' action='transfer/' method="POST">             <span>To:</span><br/>
+            {% csrf_token %}
+            <select name="to">
+			{% for account in accounts %}
+                <option value="{{account.user.username}}">{{account.user.username}}</option>
+			{% endfor %}
+            </select><br/>
+
+            <span>Amount:</span><br/>
+            <input type="number" name="amount"/><br/>
+
+            <input type="submit" value="Transfer"/>
+        </form>
+    </body>
+
+
+    </body>
+</html>

@@ -1,0 +1,22 @@
+- Create a journaling app
+    - Users can log in and write journal entries
+    - Journal entries have a date
+    - Journal entries can be marked private, public, or include a list of users they are visible to
+    - anonymous users see a list of reverse-date-ordered journal entries which are marked public
+    - anonymous users can create an account or sign in
+    - logged in users can sign out
+    - logged in users see a list reverse-date-ordered journal entries marked public, authored by them, or marked visible to them
+    - logged in users can add a journal at the top
+    - logged in users can view a private page that only shows their own journal entries
+
+- OWasp targets (using 2021 list)
+    - A01 Broken access control (https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
+        - write journal entries as a different user
+    - A03 Injection (https://owasp.org/Top10/A03_2021-Injection/)
+        - User can change the user journals are retrieved from by modifying the sql table accessed
+    - A04 Insecure Design (https://owasp.org/Top10/A04_2021-Insecure_Design/)
+        - journal entries marked public by default
+    - A05 Security Misconfiguration (https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
+        - admin password not changed
+    - A07 Identification and Authentication Failures (https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
+        - login form is vulnerable to brute force attack

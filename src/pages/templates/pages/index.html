@@ -24,17 +24,23 @@
             {% csrf_token %}
             <textarea name="entry_text"></textarea>
             <input type="submit" value="Submit"/>
+            <input type="radio" name="public" value="true">Public</input>
+            <input type="radio" name="public" value="false" checked="true">Private</input>
         </form>
         {% endif %}
 		
         <h2>Journal Items</h2>
         {% for entry in entries %}
-        <div style="border-radius:1px; border-color:black; border-style:solid; width:400px;padding:4px 4px 4px 4px">
+            {% if entry.public or entry.author.username == user.username %}
+            <div style="border-radius:1px; border-color:black; border-style:solid; width:400px;padding:4px 4px 4px 4px">
+            {% else %}
+            <div style="display:none">
+            {% endif %}
             {% if entry.author.username == user.username %}
             <a href="/delete?eid={{entry.id}}">Delete Entry</a>
             {% endif %}
             <h3>{{entry.date}}</h3>
-            <h4>from: {{entry.author.username}}</h4>
+            <h4>from: {{entry.author.username}} public:{{entry.public}}</h4>
             <h4>{{entry.text}}</h4>
         </div>
         <br>

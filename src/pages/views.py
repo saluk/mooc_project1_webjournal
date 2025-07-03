@@ -14,3 +14,16 @@ def writeView(request):
 	entry = JournalEntry(author=request.user, text=request.POST['entry_text'])
 	entry.save()
 	return redirect("home")
+
+### OWASP A01 - Uncomment to ensure anonymouse users can't access this endpoing at all ###
+# @login_required
+def deleteView(request):
+	eid = request.GET['eid']
+	entry = JournalEntry.objects.filter(id=eid).first()
+
+    ### OWASP A01 - Uncomment to ensure user is the author of the journal entry being deleted ###
+	# if not entry.author == request.user:
+	# 	 return redirect("home")
+
+	entry.delete()
+	return HttpResponse('Item deleted! <a href="/">Back to home</a>')

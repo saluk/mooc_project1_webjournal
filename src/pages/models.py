@@ -7,7 +7,7 @@ import datetime
 # Create your models here.
 
 class JournalEntry(models.Model):
-	author = models.ForeignKey(User, on_delete=models.CASCADE)
+	author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 	public = models.BooleanField(db_default=True)
 	text = models.TextField()
 	date = models.DateTimeField(default=datetime.datetime.now)

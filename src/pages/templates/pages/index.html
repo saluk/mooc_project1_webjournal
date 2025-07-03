@@ -30,6 +30,9 @@
         <h2>Journal Items</h2>
         {% for entry in entries %}
         <div style="border-radius:1px; border-color:black; border-style:solid; width:400px;padding:4px 4px 4px 4px">
+            {% if entry.author.username == user.username %}
+            <a href="/delete?eid={{entry.id}}">Delete Entry</a>
+            {% endif %}
             <h3>{{entry.date}}</h3>
             <h4>from: {{entry.author.username}}</h4>
             <h4>{{entry.text}}</h4>

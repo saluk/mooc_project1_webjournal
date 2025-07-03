@@ -16,7 +16,5 @@
         - User can change the user journals are retrieved from by modifying the sql table accessed
     - A04 Insecure Design (https://owasp.org/Top10/A04_2021-Insecure_Design/)
         - journal entries marked public by default
-    - A05 Security Misconfiguration (https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
-        - admin password not changed
     - A07 Identification and Authentication Failures (https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
         - login form is vulnerable to brute force attack

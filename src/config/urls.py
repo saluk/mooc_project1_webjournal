@@ -36,10 +36,14 @@ class MyAuthenticationForm(AuthenticationForm):
         return super().confirm_login_allowed(user)
     def get_invalid_login_error(self):
         username = self.cleaned_data.get("username")
-        if not username in self.fail_cache:
-            self.fail_cache[username] = {"fail": 0, "lastfail": 0}
-        self.fail_cache[username]["fail"] += 1
-        self.fail_cache[username]["lastfail"] = time.time()
+        ### OWASP A07 - Uncomment to add a 5 minute timeout for a user if they submit a failed password too many times ###
+        # if not username in self.fail_cache:
+        #     self.fail_cache[username] = {"fail": 0, "lastfail": 0}
+        # self.fail_cache[username]["fail"] += 1
+        # self.fail_cache[username]["lastfail"] = time.time()
+
+        ### OWASP A09 - Uncomment to log the failed login
+        # print(f"Alert! Failed login for {username}")
         return super().get_invalid_login_error()
 
 class MyLoginView(LoginView):
@@ -47,11 +51,8 @@ class MyLoginView(LoginView):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    ### OWASP A07 - Uncomment to add a 5 minute timeout for a user if they submit a failed password too many times ###
-    #path('login/', MyLoginView.as_view(template_name='pages/login.html')),
-
-	path('login/', LoginView.as_view(template_name='pages/login.html')),
+    
+    path('login/', MyLoginView.as_view(template_name='pages/login.html')),
 	path('logout/', LogoutView.as_view(next_page='/')),
 	path('', include('src.pages.urls'))
 ]

@@ -16,6 +16,8 @@
     alice:redqueen
     patrick:asteroid
 
+- sql injection: http://localhost:8000/?filter_user=bob%22+or+public%3D%220
+
 
 - OWasp targets (using 2021 list)
     [X] A01 Broken access control (https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
@@ -26,3 +28,5 @@
         - Private journal entries are displayed even though the text is hidden
     [X] A07 Identification and Authentication Failures (https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
         - login form is vulnerable to brute force attack
+    [X] A09 Security Logging Failures (https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)
+        - failed logins aren't logged

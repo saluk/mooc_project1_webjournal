@@ -17,6 +17,20 @@ def homePageView(request):
 	# else:
 	# 	entries = [e for e in entries if e.public]
 
+	filter = request.GET.get('filter_user', None)
+	print(filter)
+	### OWASP A03 - Uncomment to prevent sql injection
+	# if filter:
+	# 	entries = reversed(
+	# 		JournalEntry.objects.raw(f'select * from pages_journalentry,auth_user where pages_journalentry.author_id=auth_user.id and auth_user.username=%s and (auth_user.username=%s or pages_journalentry.public="1")',
+	# 						[filter, request.user.username])
+	# 	)
+	# 	filter = None
+	if filter:
+		entries = reversed(
+			JournalEntry.objects.raw(f'select * from pages_journalentry,auth_user where pages_journalentry.author_id=auth_user.id and auth_user.username="{filter}" and (auth_user.username="{request.user.username}" or pages_journalentry.public="1")')
+		)
+
 	return render(request, 'pages/index.html', {'entries': entries})
 
 def writeView(request):

@@ -18,7 +18,6 @@ def homePageView(request):
 	# 	entries = [e for e in entries if e.public]
 
 	filter = request.GET.get('filter_user', None)
-	print(filter)
 	### OWASP A03 - Uncomment to prevent sql injection
 	# if filter:
 	# 	entries = reversed(
@@ -40,7 +39,7 @@ def writeView(request):
 	entry.save()
 	return redirect("home")
 
-### OWASP A01 - Uncomment to ensure anonymouse users can't access this endpoing at all ###
+### OWASP A01 - Uncomment to ensure anonymous users can't access this endpoint at all ###
 # @login_required
 def deleteView(request):
 	eid = request.GET['eid']

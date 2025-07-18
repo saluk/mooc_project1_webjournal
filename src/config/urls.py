@@ -27,6 +27,9 @@ class MyAuthenticationForm(AuthenticationForm):
         super().__init__(request, *args, **kwargs)
     def confirm_login_allowed(self, user):
         fail = self.fail_cache.get(user.get_username(), {})
+        if fail and time.time()-fail["lastfail"] >= 5*60:
+            # Unlock the user
+            fail["fail"] = 0
         if fail and fail["fail"] > 3 and time.time()-fail["lastfail"] < 5*60:
             raise ValidationError(
                 self.error_messages["invalid_login"],
